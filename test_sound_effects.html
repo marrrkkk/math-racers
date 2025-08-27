@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sound Effects Test</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            }
+            button {
+                background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+                border: none;
+                border-radius: 50px;
+                color: white;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                padding: 12px 24px;
+                margin: 10px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            }
+            button:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+            }
+            .test-container {
+                max-width: 600px;
+                margin: 0 auto;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="test-container">
+            <h1>🎵 Math Racers Sound Effects Test</h1>
+            <p>Click the buttons below to test the different sound effects:</p>
+
+            <button onclick="testSuccess()">🎉 Success Sound</button>
+            <button onclick="testError()">❌ Error Sound</button>
+            <button onclick="testCompletion()">🏆 Completion Sound</button>
+            <button onclick="testRacerMove()">🏎️ Racer Move</button>
+            <button onclick="testSparkle()">✨ Sparkle Sound</button>
+            <button onclick="testClick()">🔘 Click Sound</button>
+            <button onclick="testWhoosh()">💨 Whoosh Sound</button>
+            <button onclick="testPowerUp()">⚡ Power Up Sound</button>
+
+            <div style="margin-top: 30px">
+                <button onclick="toggleSound()" id="toggleBtn">
+                    🔊 Sound Enabled
+                </button>
+            </div>
+        </div>
+
+        <script>
+            // Simple sound effects using Web Audio API (copied from our implementation)
+            class SoundEffects {
+                constructor() {
+                    this.audioContext = null;
+                    this.enabled = true;
+                    this.initAudioContext();
+                }
+
+                initAudioContext() {
+                    try {
+                        this.audioContext = new (window.AudioContext ||
+                            window.webkitAudioContext)();
+                    } catch (error) {
+                        console.warn("Web Audio API not supported:", error);
+                        this.enabled = false;
+                    }
+                }
+
+                playSuccess() {
+                    if (!this.enabled || !this.audioContext) return;
+                    try {
+                        const oscillator = this.audioContext.createOscillator();
+                        const gainNode = this.audioContext.createGain();
+                        oscillator.connect(gainNode);
+                        gainNode.connect(this.audioContext.destination);
+                        oscillator.frequency.setValueAtTime(
+                            800,
+                            this.audioContext.currentTime
+                        );
+                        oscillator.frequency.setValueAtTime(
+                            1000,
+                            this.audioContext.currentTime + 0.1
+                        );
+                        gainNode.gain.setValueAtTime(
+                            0.3,
+                            this.audioContext.currentTime
+                        );
+                        gainNode.gain.exponentialRampToValueAtTime(
+                            0.01,
+                            this.audioContext.currentTime + 0.3
+                        );
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.3);
+                    } catch (error) {
+                        console.warn("Error playing success sound:", error);
+                    }
+                }
+
+                playError() {
+                    if (!this.enabled || !this.audioContext) return;
+                    try {
+                        const oscillator = this.audioContext.createOscillator();
+                        const gainNode = this.audioContext.createGain();
+                        oscillator.connect(gainNode);
+                        gainNode.connect(this.audioContext.destination);
+                        oscillator.frequency.setValueAtTime(
+                            300,
+                            this.audioContext.currentTime
+                        );
+                        oscillator.frequency.setValueAtTime(
+                            200,
+                            this.audioContext.currentTime + 0.1
+                        );
+                        gainNode.gain.setValueAtTime(
+                            0.3,
+                            this.audioContext.currentTime
+                        );
+                        gainNode.gain.exponentialRampToValueAtTime(
+                            0.01,
+                            this.audioContext.currentTime + 0.4
+                        );
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.4);
+                    } catch (error) {
+                        console.warn("Error playing error sound:", error);
+                    }
+                }
+
+                playCompletion() {
+                    if (!this.enabled || !this.audioContext) return;
+                    try {
+                        const notes = [523, 659, 784, 1047];
+                        notes.forEach((frequency, index) => {
+                            const oscillator =
+                                this.audioContext.createOscillator();
+                            const gainNode = this.audioContext.createGain();
+                            oscillator.connect(gainNode);
+                            gainNode.connect(this.audioContext.destination);
+                            oscillator.frequency.setValueAtTime(
+                                frequency,
+                                this.audioContext.currentTime
+                            );
+                            const startTime =
+                                this.audioContext.currentTime + index * 0.2;
+                            const endTime = startTime + 0.3;
+                            gainNode.gain.setValueAtTime(0.2, startTime);
+                            gainNode.gain.exponentialRampToValueAtTime(
+                                0.01,
+                                endTime
+                            );
+                            oscillator.start(startTime);
+                            oscillator.stop(endTime);
+                        });
+                    } catch (error) {
+                        console.warn("Error playing completion sound:", error);
+                    }
+                }
+
+                playRacerMove() {
+                    if (!this.enabled || !this.audioContext) return;
+                    try {
+                        const oscillator = this.audioContext.createOscillator();
+                        const gainNode = this.audioContext.createGain();
+                        oscillator.connect(gainNode);
+                        gainNode.connect(this.audioContext.destination);
+                        oscillator.frequency.setValueAtTime(
+                            150,
+                            this.audioContext.currentTime
+                        );
+                        oscillator.frequency.setValueAtTime(
+                            250,
+                            this.audioContext.currentTime + 0.1
+                        );
+                        oscillator.frequency.setValueAtTime(
+                            200,
+                            this.audioContext.currentTime + 0.2
+                        );
+                        gainNode.gain.setValueAtTime(
+                            0.1,
+                            this.audioContext.currentTime
+                        );
+                        gainNode.gain.exponentialRampToValueAtTime(
+                            0.01,
+                            this.audioContext.currentTime + 0.3
+                        );
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.3);
+                    } catch (error) {
+                        console.warn("Error playing racer move sound:", error);
+                    }
+                }
+
+                playSparkle() {
+                    if (!this.enabled || !this.audioContext) return;
+                    try {
+                        const oscillator = this.audioContext.createOscillator();
+                        const gainNode = this.audioContext.createGain();
+                        oscillator.connect(gainNode);
+                        gainNode.connect(this.audioContext.destination);
+                        oscillator.frequency.setValueAtTime(
+                            800,
+                            this.audioContext.currentTime
+                        );
+                        oscillator.frequency.exponentialRampToValueAtTime(
+                            1600,
+                            this.audioContext.currentTime + 0.3
+                        );
+                        gainNode.gain.setValueAtTime(
+                            0.1,
+                            this.audioContext.currentTime
+                        );
+                        gainNode.gain.exponentialRampToValueAtTime(
+                            0.01,
+                            this.audioContext.currentTime + 0.3
+                        );
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.3);
+                    } catch (error) {
+                        console.warn("Error playing sparkle sound:", error);
+                    }
+                }
+
+                playClick() {
+                    if (!this.enabled || !this.audioContext) return;
+                    try {
+                        const oscillator = this.audioContext.createOscillator();
+                        const gainNode = this.audioContext.createGain();
+                        oscillator.connect(gainNode);
+                        gainNode.connect(this.audioContext.destination);
+                        oscillator.frequency.setValueAtTime(
+                            600,
+                            this.audioContext.currentTime
+                        );
+                        oscillator.frequency.setValueAtTime(
+                            800,
+                            this.audioContext.currentTime + 0.05
+                        );
+                        gainNode.gain.setValueAtTime(
+                            0.2,
+                            this.audioContext.currentTime
+                        );
+                        gainNode.gain.exponentialRampToValueAtTime(
+                            0.01,
+                            this.audioContext.currentTime + 0.1
+                        );
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.1);
+                    } catch (error) {
+                        console.warn("Error playing click sound:", error);
+                    }
+                }
+
+                playWhoosh() {
+                    if (!this.enabled || !this.audioContext) return;
+                    try {
+                        const oscillator = this.audioContext.createOscillator();
+                        const gainNode = this.audioContext.createGain();
+                        oscillator.connect(gainNode);
+                        gainNode.connect(this.audioContext.destination);
+                        oscillator.frequency.setValueAtTime(
+                            200,
+                            this.audioContext.currentTime
+                        );
+                        oscillator.frequency.exponentialRampToValueAtTime(
+                            100,
+                            this.audioContext.currentTime + 0.4
+                        );
+                        gainNode.gain.setValueAtTime(
+                            0.15,
+                            this.audioContext.currentTime
+                        );
+                        gainNode.gain.exponentialRampToValueAtTime(
+                            0.01,
+                            this.audioContext.currentTime + 0.4
+                        );
+                        oscillator.start(this.audioContext.currentTime);
+                        oscillator.stop(this.audioContext.currentTime + 0.4);
+                    } catch (error) {
+                        console.warn("Error playing whoosh sound:", error);
+                    }
+                }
+
+                playPowerUp() {
+                    if (!this.enabled || !this.audioContext) return;
+                    try {
+                        const frequencies = [261, 329, 392, 523];
+                        frequencies.forEach((frequency, index) => {
+                            const oscillator =
+                                this.audioContext.createOscillator();
+                            const gainNode = this.audioContext.createGain();
+                            oscillator.connect(gainNode);
+                            gainNode.connect(this.audioContext.destination);
+                            oscillator.frequency.setValueAtTime(
+                                frequency,
+                                this.audioContext.currentTime
+                            );
+                            const startTime =
+                                this.audioContext.currentTime + index * 0.1;
+                            const endTime = startTime + 0.5;
+                            gainNode.gain.setValueAtTime(0.1, startTime);
+                            gainNode.gain.exponentialRampToValueAtTime(
+                                0.01,
+                                endTime
+                            );
+                            oscillator.start(startTime);
+                            oscillator.stop(endTime);
+                        });
+                    } catch (error) {
+                        console.warn("Error playing power-up sound:", error);
+                    }
+                }
+
+                toggle() {
+                    this.enabled = !this.enabled;
+                    return this.enabled;
+                }
+
+                isEnabled() {
+                    return this.enabled;
+                }
+            }
+
+            const soundEffects = new SoundEffects();
+
+            function testSuccess() {
+                soundEffects.playSuccess();
+            }
+            function testError() {
+                soundEffects.playError();
+            }
+            function testCompletion() {
+                soundEffects.playCompletion();
+            }
+            function testRacerMove() {
+                soundEffects.playRacerMove();
+            }
+            function testSparkle() {
+                soundEffects.playSparkle();
+            }
+            function testClick() {
+                soundEffects.playClick();
+            }
+            function testWhoosh() {
+                soundEffects.playWhoosh();
+            }
+            function testPowerUp() {
+                soundEffects.playPowerUp();
+            }
+
+            function toggleSound() {
+                const enabled = soundEffects.toggle();
+                const btn = document.getElementById("toggleBtn");
+                btn.textContent = enabled
+                    ? "🔊 Sound Enabled"
+                    : "🔇 Sound Disabled";
+            }
+        </script>
+    </body>
+</html>
