@@ -247,10 +247,23 @@ export default function QuizGame({
                                 <button
                                     onClick={() =>
                                         router.get(
-                                            route("student.topics", { grade })
+                                            route("student.leaderboard", {
+                                                grade: grade,
+                                                topic: topic,
+                                            })
                                         )
                                     }
                                     className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                                >
+                                    View Leaderboard �
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        router.get(
+                                            route("student.topics", { grade })
+                                        )
+                                    }
+                                    className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors border-2 border-white"
                                 >
                                     Play Again 🎮
                                 </button>
@@ -258,7 +271,7 @@ export default function QuizGame({
                                     onClick={() =>
                                         router.get(route("student.dashboard"))
                                     }
-                                    className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors border-2 border-white"
+                                    className="bg-white text-gray-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors border-2 border-gray-200"
                                 >
                                     Back to Dashboard 🏠
                                 </button>

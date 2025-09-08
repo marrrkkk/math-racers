@@ -16,7 +16,7 @@ export default function RaceTrack({
             // Create sparkle effects
             const newSparkles = Array.from({ length: 5 }, (_, i) => ({
                 id: i,
-                left: Math.random() * 80 + 10,
+                right: Math.random() * 80 + 10,
                 delay: Math.random() * 0.5,
             }));
             setSparkles(newSparkles);
@@ -47,7 +47,7 @@ export default function RaceTrack({
                     key={sparkle.id}
                     className="absolute text-2xl animate-bounce pointer-events-none"
                     style={{
-                        left: `${sparkle.left}%`,
+                        right: `${sparkle.right}%`,
                         top: "20%",
                         animationDelay: `${sparkle.delay}s`,
                     }}
@@ -67,38 +67,38 @@ export default function RaceTrack({
             </div>
 
             {/* Track */}
-            <div className="relative bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg h-24 mb-4 overflow-hidden shadow-playful">
+            <div className="relative bg-gradient-to-l from-gray-800 to-gray-900 rounded-lg h-24 mb-4 overflow-hidden shadow-playful">
                 {/* Animated track lines */}
                 <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t-4 border-dashed border-yellow-400 opacity-60 animate-pulse"></div>
                 </div>
 
                 {/* Start line with animation */}
-                <div className="absolute left-0 top-0 h-full w-3 bg-gradient-to-r from-white to-gray-200 opacity-90">
+                <div className="absolute right-0 top-0 h-full w-3 bg-gradient-to-l from-white to-gray-200 opacity-90">
                     <div className="absolute inset-0 bg-white animate-pulse"></div>
                 </div>
-                <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-xs font-bold bg-black bg-opacity-50 px-2 py-1 rounded">
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-xs font-bold bg-black bg-opacity-50 px-2 py-1 rounded">
                     START
                 </div>
 
                 {/* Finish line with checkered pattern */}
-                <div className="absolute right-0 top-0 h-full w-3 bg-gradient-to-l from-white to-gray-200 opacity-90 racing-stripes"></div>
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-lg animate-bounce">
+                <div className="absolute left-0 top-0 h-full w-3 bg-gradient-to-r from-white to-gray-200 opacity-90 racing-stripes"></div>
+                <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-lg animate-bounce">
                     🏁
                 </div>
 
                 {/* Enhanced progress markers */}
-                <div className="absolute top-0 left-1/4 h-full w-1 bg-white opacity-40">
+                <div className="absolute top-0 right-1/4 h-full w-1 bg-white opacity-40">
                     <div className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 text-xs text-white">
                         25%
                     </div>
                 </div>
-                <div className="absolute top-0 left-1/2 h-full w-1 bg-white opacity-40">
+                <div className="absolute top-0 right-1/2 h-full w-1 bg-white opacity-40">
                     <div className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 text-xs text-white">
                         50%
                     </div>
                 </div>
-                <div className="absolute top-0 left-3/4 h-full w-1 bg-white opacity-40">
+                <div className="absolute top-0 right-3/4 h-full w-1 bg-white opacity-40">
                     <div className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 text-xs text-white">
                         75%
                     </div>
@@ -108,7 +108,7 @@ export default function RaceTrack({
                 <div
                     className={`absolute top-1/2 transform -translate-y-1/2 text-5xl transition-all duration-1000 ease-out ${animationClass} z-10`}
                     style={{
-                        left: `${Math.max(2, Math.min(racerProgress, 88))}%`,
+                        right: `${Math.max(2, Math.min(racerProgress, 88))}%`,
                     }}
                 >
                     🏎️
@@ -119,7 +119,7 @@ export default function RaceTrack({
                     <div
                         className="absolute top-1/2 transform -translate-y-1/2 text-2xl opacity-50 transition-all duration-1000"
                         style={{
-                            left: `${Math.max(
+                            right: `${Math.max(
                                 0,
                                 Math.min(racerProgress - 5, 85)
                             )}%`,
@@ -161,7 +161,7 @@ export default function RaceTrack({
                 {/* Enhanced progress bar */}
                 <div className="relative w-full bg-white bg-opacity-20 rounded-full h-4 shadow-inner">
                     <div
-                        className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 h-4 rounded-full transition-all duration-1000 shadow-playful relative overflow-hidden"
+                        className="bg-gradient-to-l from-yellow-400 via-orange-500 to-red-500 h-4 rounded-full transition-all duration-1000 shadow-playful relative overflow-hidden"
                         style={{ width: `${racerProgress}%` }}
                     >
                         {/* Animated shine effect */}
@@ -172,7 +172,7 @@ export default function RaceTrack({
                     {racerProgress > 10 && (
                         <div
                             className="absolute top-1/2 transform -translate-y-1/2 bg-white text-gray-800 text-xs font-bold px-2 py-1 rounded-full shadow-lg"
-                            style={{ left: `${Math.min(racerProgress, 85)}%` }}
+                            style={{ right: `${Math.min(racerProgress, 85)}%` }}
                         >
                             {Math.round(racerProgress)}%
                         </div>

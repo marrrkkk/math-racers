@@ -161,15 +161,11 @@ class StudentController extends Controller
       ->whereNull('completed_at')
       ->firstOrFail();
 
-    // Update session with completion data
-    $quizSession->update([
-      'time_taken' => $request->total_time,
-      'completed_at' => now()
-    ]);
-
-    // Calculate final score
-    $quizSession->points_earned = $quizSession->calculateScore();
-    $quizSession->save();
+    // Update session with time taken
+    $quizSession->time_taken = $request->total_time;
+    
+    // Complete quiz session (this will calculate score and update progress)
+    $quizSession->complete();
 
     return Inertia::render('Student/QuizGame', [
       'user' => $user,
